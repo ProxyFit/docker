@@ -18,5 +18,3 @@
     "url": "git://github.com/documentcloud/underscore.git"
   }
 }
-
-Assurez-vous de remplacer "dependency1" et "dependency2" par les dépendances réelles dont votre projet a besoin, avec les versions appropriées. Vous pouvez également ajouter d'autres scripts, configurations ou informations spécifiques à votre projet dans le fichier package.json en fonction de vos besoins.
