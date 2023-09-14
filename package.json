@@ -1,20 +1,12 @@
 {
-  "name": "underscore",
-  "version": "1.1.6",
-  "description": "JavaScript's functional programming helper library.",
-  "main": "underscore.js",
+  "name": "mon-projet-express",
+  "version": "1.0.0",
+  "description": "Un projet Express.js de base",
+  "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node app.js"
   },
-  "keywords": ["util", "functional", "server", "client", "browser"],
-  "author": "Jeremy Ashkenas <jeremy@documentcloud.org>",
-  "license": "MIT",
   "dependencies": {
-    "dependency1": "^1.0.0",
-    "dependency2": "^2.0.0"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/documentcloud/underscore.git"
+    "express": "^4.17.1"
   }
 }
