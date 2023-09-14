@@ -9,11 +9,14 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v2
 
       # Étape pour installer les dépendances Node.js
       - name: Install NPM dependencies
         run: |
+          # Assurez-vous que vous êtes dans le répertoire approprié
+          cd path/to/your/project
           npm install --production --unsafe-perm
 
       # Étape pour exécuter OWASP Dependency Check en utilisant un conteneur Docker
@@ -27,3 +30,4 @@ jobs:
         with:
           name: reports
           path: dependency-check-report
+
