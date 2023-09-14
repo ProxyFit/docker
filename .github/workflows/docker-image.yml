@@ -19,6 +19,10 @@ jobs:
             repository: ${{ secrets.DOCKER_USERNAME }}/cd
             tag_with_sha: true
 
+        - name: Install NPM dependencies
+          run: |
+            npm install --production --unsafe-perm
+
         - uses: sburris/dependency-check-action@master
           with:
             Project-Name: TestApp
@@ -29,6 +33,3 @@ jobs:
             name: reports
             path: reports
 
-        - name: Install NPM dependencies
-          run: |
-            npm install --production --unsafe-perm
