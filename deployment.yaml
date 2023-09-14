@@ -15,7 +15,7 @@ spec:
         app: webserver
     spec:
       containers:
-      - name: webserver
+      - name: proxyfit/cd
         image: proxyfit/cd:sha-c60fe2a
         imagePullPolicy: IfNotPresent
         ports:
