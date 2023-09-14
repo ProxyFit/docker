@@ -13,10 +13,10 @@ jobs:
         - name: build-push
           uses: docker/build-push-action@v1
           with:
-            username: ${{ secrets.proxyfit }}
-            password: ${{ secrets.proxyfit }}
+            username: ${{ secrets.DOCKER_USERNAME }}
+            password: ${{ secrets.DOCKER_PASSWORD }}
             registry: docker.io
-            repository: proxyfit/cd
+            repository: ${{ secrets.DOCKER_USERNAME }}/cd
             tag_with_sha: true
 
         - uses: sburris/dependency-check-action@master
@@ -29,7 +29,6 @@ jobs:
             name: reports
             path: reports
 
-        - uses: actions/checkout@v2
         - name: Install NPM dependencies
           run: |
             npm install --production --unsafe-perm
