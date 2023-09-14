@@ -1,20 +1,31 @@
 name: Build App
 
 on:
-    push:
-        branches:
-        - main
+  push:
+    branches:
+      - main
 
 jobs:
-    build:
-        runs-on: ubuntu-latest
-        steps:
-        - uses: actions/checkout@v2
-        - name: build-push
-          uses: docker/build-push-action@v1
-          with:
-            username: ${{ secrets.DOCKER_USERNAME }}
-            password: ${{ secrets.DOCKER_PASSWORD }}
-            registry: docker.io
-            repository:  ${{ secrets.DOCKER_USERNAME }}/cd
-            tag_with_sha: true
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      # Étape pour installer les dépendances Node.js
+      - name: Install NPM dependencies
+        run: |
+          npm install --production --unsafe-perm
+
+      # Étape pour exécuter OWASP Dependency Check
+      - name: Run OWASP Dependency Check
+        uses: denisgladkiy/owasp-dependency-check-action@v4.3.1
+        with:
+          # Répertoire où se trouvent les fichiers de dépendances (ex. package-lock.json, pom.xml)
+          scan-path: .
+
+      # Étape pour archiver les rapports de dépendances
+      - name: Archive dependency check reports
+        uses: actions/upload-artifact@v1
+        with:
+          name: reports
+          path: dependency-check-report
