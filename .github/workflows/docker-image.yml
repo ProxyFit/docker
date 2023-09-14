@@ -1,33 +1,35 @@
 name: Build App
 
 on:
-  push:
-    branches:
-      - main
+    push:
+        branches:
+        - main
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+    build:
+        runs-on: ubuntu-latest
+        steps:
+        - uses: actions/checkout@v2
+        - name: build-push
+          uses: docker/build-push-action@v1
+          with:
+            username: ${{ secrets.proxyfit }}
+            password: ${{ secrets.proxyfit }}
+            registry: docker.io
+            repository: proxyfit/cd
+            tag_with_sha: true
 
-      # Étape pour installer les dépendances Node.js
-      - name: Install NPM dependencies
-        run: |
-          # Assurez-vous que vous êtes dans le répertoire approprié
-          cd path/to/your/project
-          npm install --production --unsafe-perm
+        - uses: sburris/dependency-check-action@master
+          with:
+            Project-Name: TestApp
 
-      # Étape pour exécuter OWASP Dependency Check en utilisant un conteneur Docker
-      - name: Run OWASP Dependency Check
-        run: |
-          docker run --rm -v "$(pwd):/work" owasp/dependency-check:latest --scan /work
+        - name: Archive dependency check reports
+          uses: actions/upload-artifact@v1
+          with:
+            name: reports
+            path: reports
 
-      # Étape pour archiver les rapports de dépendances
-      - name: Archive dependency check reports
-        uses: actions/upload-artifact@v1
-        with:
-          name: reports
-          path: dependency-check-report
-
+        - uses: actions/checkout@v2
+        - name: Install NPM dependencies
+          run: |
+            npm install --production --unsafe-perm
